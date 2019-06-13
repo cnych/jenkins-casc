@@ -1,0 +1,57 @@
+jenkins:
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  disableRememberMe: false
+  mode: NORMAL
+  numExecutors: 2
+  primaryView:
+    all:
+      name: "all"
+  quietPeriod: 5
+  scmCheckoutRetryCount: 0
+  securityRealm: # (2)
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+      - id: "cnych2"
+        password: ${rootPassword}
+  slaveAgentPort: 50000
+  views:
+  - all:
+      name: "all"
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
+  jdk: # (3)
+    installations:
+    - home: "/docker-java-home"
+      name: "jdk"
+  maven: # (4)
+    installations:
+    - name: "maven"
+      properties:
+      - installSource:
+          installers:
+          - maven:
+              id: "3.5.4"
+credentials: # (5)
+  system:
+    domainCredentials:
+      - domain :
+          name: "github.com"
+          description: "GitHub"
+        credentials:
+          - usernamePassword:
+              scope: SYSTEM
+              id: github-cnych
+              username: cnych
